@@ -1,6 +1,6 @@
 import { Formik, Field, Form, FormikHelpers } from 'formik';
 import { useAppSelector, useAppDispatch } from '../../../hooks';
-import { GroceryItem, selectCount } from '../grocerySlice';
+import { GroceryItemType, selectCount } from '../grocerySlice';
 import { add, update } from '../grocerySlice';
 import * as yup from 'yup';
 import { useState } from 'react';
@@ -26,12 +26,13 @@ const GroceryForm: React.FC<{}> = () => {
         groceryName: yup.string().min(2, 'Must have at least 2 chars').required('Required'),
         quantity: yup.number(),
       })}
-      onSubmit={(values: GroceryFormValues, { setSubmitting }: FormikHelpers<GroceryFormValues>) => {
-        const newItem: GroceryItem = {
+      onSubmit={(values: GroceryFormValues, { setSubmitting, resetForm }: FormikHelpers<GroceryFormValues>) => {
+        const newItem: GroceryItemType = {
           id: count + 1,
           name: values.groceryName,
           quantity: values.quantity,
         };
+        resetForm();
         setSubmitting(false);
         dispatch(add(newItem));
       }}>
@@ -47,7 +48,7 @@ const GroceryForm: React.FC<{}> = () => {
           <label htmlFor='quantity' className='text-sm font-semibold italic'>
             Quantity
           </label>
-          <Field className='px-2 py-2 text-slate-700' type='number' id='quantity' name='quantity' value='1' />
+          <Field className='px-2 py-2 text-slate-700' type='number' id='quantity' name='quantity' />
         </div>
         <div className='flex flex-nowrap justify-center col-span-12 gap-x-2'>
           <Button className='basis-full' type='submit'>
