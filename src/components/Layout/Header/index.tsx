@@ -12,7 +12,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ className }) => {
   return (
-    <header id='header' className={`container mx-auto flex flex-row flex-nowrap justify-between items-center border-b ${className !== undefined ? className : ''}`}>
+    <header id='header' className={`container mx-auto flex flex-row flex-nowrap justify-between items-center border-b flex-shrink-0 h-16 ${className !== undefined ? className : ''}`}>
       <div className='text-xl font-bold'>Logo</div>
       <nav className='flex flex-nowrap'>
         <Link to='/' className={`${linkClasses.normal} ${linkClasses.hover}`}>
