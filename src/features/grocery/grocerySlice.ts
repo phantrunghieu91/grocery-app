@@ -42,12 +42,17 @@ const grocerySlice = createSlice({
       state.groceryList = state.groceryList.filter(item => item.id !== payload);
     },
     prepareUpdate: (state, { payload }: PayloadAction<number>) => {
-      state.updatingItem = state.groceryList.find(item => (item.id = payload));
+      state.formAction = 'edit';
+      state.updatingItem = state.groceryList.find(item => item.id === payload);
+    },
+    resetFormAction: state => {
+      state.formAction = 'add';
+      if (state.updatingItem !== undefined) state.updatingItem = undefined;
     },
   },
 });
 
-export const { add, update, remove, prepareUpdate } = grocerySlice.actions;
+export const { add, update, remove, prepareUpdate, resetFormAction } = grocerySlice.actions;
 export const selectGroceryList: (state: RootState) => GroceryList = state => state.grocery.groceryList;
 export const selectCount: (state: RootState) => number = state => state.grocery.count;
 export const selectFormAction: (state: RootState) => 'add' | 'edit' = state => state.grocery.formAction;
